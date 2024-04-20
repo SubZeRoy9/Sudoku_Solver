@@ -14,6 +14,21 @@ namespace HaeringProject
     {
         /************************variables we will be using*****************/
         static int BOARD_SIZE = 9;
+
+        //Available boards.
+        int[,] board1 = new int[9, 9]
+        {
+            {5, 0, 0, 0, 0, 0, 0, 0, 4},
+            {0, 1, 0, 0, 9, 0, 0, 0, 0},
+            {0, 0, 0, 3, 0, 0, 7, 0, 0},
+            {0, 0, 9, 0, 0, 6, 0, 0, 0},
+            {0, 0, 0, 0, 7, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 9, 8, 0},
+            {0, 0, 7, 0, 0, 3, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 6, 0},
+            {3, 0, 0, 0, 0, 0, 0, 0, 2}
+        };
+
         int[,] board = new int[9, 9]
         {
             {5, 3, 0, 0, 7, 0, 0, 0, 0},
@@ -54,11 +69,15 @@ namespace HaeringProject
                 }
             }
         }
+
+        private void saveBttn(object sender, EventArgs e)
+        { 
+        }
         //***********************Holy Crap it works. Good job Roy****************************//
 
         //***********************************************Sudoku Solver logic***********************************************//
         //If number exists in row return true
-        static Boolean isNumberInRow(int[,] board, int number, int row)
+        private static Boolean isNumberInRow(int[,] board, int number, int row)
         {
             for (int i = 0; i < BOARD_SIZE; i++)
             {
@@ -71,7 +90,7 @@ namespace HaeringProject
         }
 
         //if number exists in column return true
-        static Boolean isNumberInColumn(int[,] board, int number, int column)
+        private static Boolean isNumberInColumn(int[,] board, int number, int column)
         {
             for (int i = 0; i < BOARD_SIZE; i++)
             {
@@ -85,7 +104,7 @@ namespace HaeringProject
         }
 
         //3x3 box so modulo 3 returns location of top left position in local box. 
-        static Boolean isNumberInBox(int[,] board, int number, int row, int column)
+        private static Boolean isNumberInBox(int[,] board, int number, int row, int column)
         {
             int localBoxRow = row - row % 3; //for example if we use row 4. 4 % 3 is 1. 4 = 1 is 3.
             int localBoxColumn = column - column % 3; //if number is 5. 5 % 3 is 2. 5 - 2 is 3. this function always gives us top left corner. 
@@ -104,7 +123,7 @@ namespace HaeringProject
         }
 
         //Uses isNumberInRow, isNumberInColumn, isNumberInBox to decide if it is valid placement. If all methods return false, then it is valid. 
-        static Boolean isValidPlacement(int[,] board, int number, int row, int column)
+        private static Boolean isValidPlacement(int[,] board, int number, int row, int column)
         {
             return !isNumberInRow(board, number, row) &&
                 !isNumberInColumn(board, number, column) &&
@@ -112,7 +131,7 @@ namespace HaeringProject
         }
 
         //Solver logic.
-        static Boolean solveBoard(int[,] board)
+        private static Boolean solveBoard(int[,] board)
         {
             for (int row = 0; row < BOARD_SIZE; row++)
             {
