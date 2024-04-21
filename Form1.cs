@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,21 +15,10 @@ namespace HaeringProject
     {
         /************************variables we will be using*****************/
         static int BOARD_SIZE = 9;
+        private int difficulty;
+        private int[,] chosenBoard; //test
 
         //Available boards.
-        int[,] board1 = new int[9, 9]
-        {
-            {5, 0, 0, 0, 0, 0, 0, 0, 4},
-            {0, 1, 0, 0, 9, 0, 0, 0, 0},
-            {0, 0, 0, 3, 0, 0, 7, 0, 0},
-            {0, 0, 9, 0, 0, 6, 0, 0, 0},
-            {0, 0, 0, 0, 7, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 9, 8, 0},
-            {0, 0, 7, 0, 0, 3, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 6, 0},
-            {3, 0, 0, 0, 0, 0, 0, 0, 2}
-        };
-
         int[,] board = new int[9, 9]
         {
             {5, 3, 0, 0, 7, 0, 0, 0, 0},
@@ -42,30 +32,78 @@ namespace HaeringProject
             {0, 0, 0, 0, 8, 0, 0, 7, 9}
         };
 
+        int[,] board1 = new int[9, 9]
+        {
+            {5, 0, 0, 0, 0, 0, 0, 0, 4},
+            {0, 1, 0, 0, 9, 0, 0, 0, 0},
+            {0, 0, 0, 3, 0, 0, 7, 0, 0},
+            {0, 0, 9, 0, 0, 6, 0, 0, 0},
+            {0, 0, 0, 0, 7, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 9, 8, 0},
+            {0, 0, 7, 0, 0, 3, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 6, 0},
+            {3, 0, 0, 0, 0, 0, 0, 0, 2}
+        };
+
+        int[,] board2 = new int[9, 9]
+        {
+            {8, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 3, 6, 0, 0, 0, 0, 0},
+            {0, 7, 0, 0, 9, 0, 2, 0, 0},
+            {0, 5, 0, 0, 0, 7, 0, 0, 0},
+            {0, 0, 0, 0, 4, 5, 7, 0, 0},
+            {0, 0, 0, 1, 0, 0, 0, 3, 0},
+            {0, 0, 1, 0, 0, 0, 0, 6, 8},
+            {0, 0, 8, 5, 0, 0, 0, 1, 0},
+            {0, 9, 0, 0, 0, 0, 4, 0, 0}
+        };
+
         //Driver Code
-        public Form1()
+        public Form1(int difficulty)
         {
             InitializeComponent();
-            InitializeDataGridView();
+            InitializeDataGridView(difficulty);
             button1.Click += button1Clicked; //Easy more concise and readable way to make event handler
+            this.difficulty = difficulty;        
         }
 
         //Initialize the datagridview here
-        public void InitializeDataGridView()
+        public void InitializeDataGridView(int difficulty)
         {
             //Sets rows and columns of datagrid to 9x9. 
             dataGridView1.RowCount = BOARD_SIZE;
             dataGridView1.ColumnCount = BOARD_SIZE;
-            
-            
-            //nested for loop goes through the board and assignes it to that position in the datagrid. 
-            for (int i = 0; i < BOARD_SIZE; i++)
+
+            switch(difficulty)
             {
-                for (int j = 0; j < BOARD_SIZE; j++)
+                case 1:
+                    this.chosenBoard = board; //test
+                    makeBoard(board);
+                    break;
+                case 2:
+                    this.chosenBoard = board1; //test
+                    makeBoard(board1);
+                    break;
+                case 3:
+                    this.chosenBoard = board2; //test
+                    makeBoard(board2);
+                    break;
+                default:
+                    makeBoard(board);
+                    break;
+            }
+
+
+             void makeBoard(int[,] chosenBoard) {
+                //nested for loop goes through the board and assignes it to that position in the datagrid. 
+                for (int i = 0; i < BOARD_SIZE; i++)
                 {
-                    dataGridView1.Rows[i].Cells[j].Value = board[i, j];
-                    dataGridView1.Rows[i].Height = 30; //sets size
-                    dataGridView1.Columns[i].Width = 30; // sets size
+                    for (int j = 0; j < BOARD_SIZE; j++)
+                    {
+                        dataGridView1.Rows[i].Cells[j].Value = chosenBoard[i, j];
+                        dataGridView1.Rows[i].Height = 30; //sets size
+                        dataGridView1.Columns[i].Width = 30; // sets size
+                    }
                 }
             }
         }
@@ -164,13 +202,13 @@ namespace HaeringProject
 
         private void populateWithSolution()
         {
-            if (solveBoard(board)) {
+            if (solveBoard(chosenBoard)) { //test
 
                 for (int i = 0; i < BOARD_SIZE; i++)
                 {
                     for (int j = 0; j < BOARD_SIZE; j++)
                     {
-                        dataGridView1.Rows[i].Cells[j].Value = board[i, j];
+                        dataGridView1.Rows[i].Cells[j].Value = chosenBoard[i, j];
                         dataGridView1.Rows[i].Height = 30; //sets size
                         dataGridView1.Columns[i].Width = 30; // sets size
                     }
