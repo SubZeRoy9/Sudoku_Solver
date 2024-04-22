@@ -17,6 +17,7 @@ namespace HaeringProject
         static int BOARD_SIZE = 9;
         private int difficulty;
         private int[,] chosenBoard; //test
+        private int[,] userBoard;
 
         //Available boards.
         int[,] board = new int[9, 9]
@@ -62,31 +63,45 @@ namespace HaeringProject
         public Form1(int difficulty)
         {
             InitializeComponent();
-            InitializeDataGridView(difficulty);
+            InitializeDataGridView(difficulty, userBoard);
             button1.Click += button1Clicked; //Easy more concise and readable way to make event handler
             this.difficulty = difficulty;        
         }
+        public Form1(int difficulty, int[,] userBoard)
+        {
+            InitializeComponent();
+            InitializeDataGridView(difficulty, userBoard);
+            button1.Click += button1Clicked;
+            this.difficulty = difficulty;
+            this.userBoard = userBoard;
+        }
 
         //Initialize the datagridview here
-        public void InitializeDataGridView(int difficulty)
+        public void InitializeDataGridView(int difficulty, int[,] userBoard)
         {
-            //Sets rows and columns of datagrid to 9x9. 
+            //Sets rows and columns of datagrid to 9x9. Hide the headers.
             dataGridView1.RowCount = BOARD_SIZE;
             dataGridView1.ColumnCount = BOARD_SIZE;
+            dataGridView1.ColumnHeadersVisible = false;
+            dataGridView1.RowHeadersVisible = false;
 
             switch(difficulty)
             {
                 case 1:
-                    this.chosenBoard = board; //test
+                    this.chosenBoard = board; 
                     makeBoard(board);
                     break;
                 case 2:
-                    this.chosenBoard = board1; //test
+                    this.chosenBoard = board1; 
                     makeBoard(board1);
                     break;
                 case 3:
-                    this.chosenBoard = board2; //test
+                    this.chosenBoard = board2; 
                     makeBoard(board2);
+                    break;
+                case 4:
+                    this.chosenBoard = userBoard;
+                    makeBoard(userBoard);
                     break;
                 default:
                     makeBoard(board);
