@@ -4,41 +4,41 @@ using System.Windows.Forms;
 
 namespace HaeringProject
 {
-    public partial class Form2 : Form
+    public partial class LaunchForm : Form
     {
         public static String filePath;
         public static int difficulty; // A variable to represent difficulty. 
-        public Form2()
+        public LaunchForm()
         {
             InitializeComponent();
         }
 
         //Easy Button event lisener
-        private void easyButton_Click(object sender, EventArgs e)
+        private void EasyButton_Click(object sender, EventArgs e)
         {
             difficulty = 1;
-            Form1 form1 = new Form1(difficulty);
+            SolverForm form1 = new SolverForm(difficulty);
             form1.Show();
         }
         
         //Medium Button Event Listener
-        private void mediumButton_Click(object sender, EventArgs e)
+        private void MediumButton_Click(object sender, EventArgs e)
         {
             difficulty = 2;
-            Form1 form1 = new Form1(difficulty);
+            SolverForm form1 = new SolverForm(difficulty);
             form1.Show();
 
         }
 
         //Hard Button Event Listener
-        private void hardButton_Click(object sender, EventArgs e)
+        private void HardButton_Click(object sender, EventArgs e)
         {
             difficulty = 3;
-            Form1 form1 = new Form1(difficulty);
+            SolverForm form1 = new SolverForm(difficulty);
             form1.Show();
         }
 
-        private void loadButton_Click(object sender, EventArgs e)
+        private void LoadButton_Click(object sender, EventArgs e)
         {
             difficulty = 4;
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -65,12 +65,18 @@ namespace HaeringProject
                         userBoard[i, j] = int.Parse(numbers[j]);
                     }
                 }
-                Form1 form1 = new Form1(4, userBoard);
+                SolverForm form1 = new SolverForm(4, userBoard);
                 form1.Show();
 
 
             }
 
+        }
+
+        private void OpenSaveButton_Click(object sender, EventArgs e)
+        {
+            SaveForm saveForm = new SaveForm();
+            saveForm.Show();
         }
     }
 }

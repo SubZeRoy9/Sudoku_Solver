@@ -11,16 +11,16 @@ using System.Windows.Forms;
 
 namespace HaeringProject
 {
-    public partial class Form1 : Form
+    public partial class SolverForm : Form
     {
         /************************variables we will be using*****************/
-        static int BOARD_SIZE = 9;
-        private int difficulty;
-        private int[,] chosenBoard; //test
-        private int[,] userBoard;
+        private static int BOARD_SIZE = 9;
+        private int Difficulty;
+        private int[,] ChosenBoard; //test
+        private int[,] UserBoard;
 
         //Available boards.
-        int[,] board = new int[9, 9]
+        int[,] EasyBoard = new int[9, 9]
         {
             {5, 3, 0, 0, 7, 0, 0, 0, 0},
             {6, 0, 0, 1, 9, 5, 0, 0, 0},
@@ -33,7 +33,7 @@ namespace HaeringProject
             {0, 0, 0, 0, 8, 0, 0, 7, 9}
         };
 
-        int[,] board1 = new int[9, 9]
+        int[,] MediumBoard = new int[9, 9]
         {
             {5, 0, 0, 0, 0, 0, 0, 0, 4},
             {0, 1, 0, 0, 9, 0, 0, 0, 0},
@@ -46,7 +46,7 @@ namespace HaeringProject
             {3, 0, 0, 0, 0, 0, 0, 0, 2}
         };
 
-        int[,] board2 = new int[9, 9]
+        int[,] HardBoard = new int[9, 9]
         {
             {8, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 3, 6, 0, 0, 0, 0, 0},
@@ -60,20 +60,20 @@ namespace HaeringProject
         };
 
         //Driver Code
-        public Form1(int difficulty)
+        public SolverForm(int difficulty)
         {
             InitializeComponent();
-            InitializeDataGridView(difficulty, userBoard);
-            button1.Click += button1Clicked; //Easy more concise and readable way to make event handler
-            this.difficulty = difficulty;        
+            InitializeDataGridView(difficulty, UserBoard);
+            button1.Click += SolveButtonClicked; //Easy more concise and readable way to make event handler
+            this.Difficulty = difficulty;        
         }
-        public Form1(int difficulty, int[,] userBoard)
+        public SolverForm(int difficulty, int[,] userBoard)
         {
             InitializeComponent();
             InitializeDataGridView(difficulty, userBoard);
-            button1.Click += button1Clicked;
-            this.difficulty = difficulty;
-            this.userBoard = userBoard;
+            button1.Click += SolveButtonClicked;
+            this.Difficulty = difficulty;
+            this.UserBoard = userBoard;
         }
 
         //Initialize the datagridview here
@@ -88,28 +88,28 @@ namespace HaeringProject
             switch(difficulty)
             {
                 case 1:
-                    this.chosenBoard = board; 
-                    makeBoard(board);
+                    this.ChosenBoard = EasyBoard; 
+                    MakeBoard(EasyBoard);
                     break;
                 case 2:
-                    this.chosenBoard = board1; 
-                    makeBoard(board1);
+                    this.ChosenBoard = MediumBoard; 
+                    MakeBoard(MediumBoard);
                     break;
                 case 3:
-                    this.chosenBoard = board2; 
-                    makeBoard(board2);
+                    this.ChosenBoard = HardBoard; 
+                    MakeBoard(HardBoard);
                     break;
                 case 4:
-                    this.chosenBoard = userBoard;
-                    makeBoard(userBoard);
+                    this.ChosenBoard = userBoard;
+                    MakeBoard(userBoard);
                     break;
                 default:
-                    makeBoard(board);
+                    MakeBoard(EasyBoard);
                     break;
             }
 
 
-             void makeBoard(int[,] chosenBoard) {
+             void MakeBoard(int[,] chosenBoard) {
                 //nested for loop goes through the board and assignes it to that position in the datagrid. 
                 for (int i = 0; i < BOARD_SIZE; i++)
                 {
@@ -123,14 +123,14 @@ namespace HaeringProject
             }
         }
 
-        private void saveBttn(object sender, EventArgs e)
+        private void SaveBttn(object sender, EventArgs e)
         { 
         }
         //***********************Holy Crap it works. Good job Roy****************************//
 
         //***********************************************Sudoku Solver logic***********************************************//
         //If number exists in row return true
-        private static Boolean isNumberInRow(int[,] board, int number, int row)
+        private static Boolean IsNumberInRow(int[,] board, int number, int row)
         {
             for (int i = 0; i < BOARD_SIZE; i++)
             {
@@ -143,7 +143,7 @@ namespace HaeringProject
         }
 
         //if number exists in column return true
-        private static Boolean isNumberInColumn(int[,] board, int number, int column)
+        private static Boolean IsNumberInColumn(int[,] board, int number, int column)
         {
             for (int i = 0; i < BOARD_SIZE; i++)
             {
@@ -157,14 +157,15 @@ namespace HaeringProject
         }
 
         //3x3 box so modulo 3 returns location of top left position in local box. 
-        private static Boolean isNumberInBox(int[,] board, int number, int row, int column)
+        private static Boolean IsNumberInBox(int[,] board, int number, int row, int column)
         {
             int localBoxRow = row - row % 3; //for example if we use row 4. 4 % 3 is 1. 4 = 1 is 3.
             int localBoxColumn = column - column % 3; //if number is 5. 5 % 3 is 2. 5 - 2 is 3. this function always gives us top left corner. 
-
+            
+            //traverses local box.
             for (int i = localBoxRow; i < localBoxRow + 3; i++)
             {
-                for (int j = localBoxColumn; j < localBoxColumn + 3; j++) //traverses local box. 
+                for (int j = localBoxColumn; j < localBoxColumn + 3; j++)  
                 {
                     if (board[i, j] == number)
                     {
@@ -176,15 +177,15 @@ namespace HaeringProject
         }
 
         //Uses isNumberInRow, isNumberInColumn, isNumberInBox to decide if it is valid placement. If all methods return false, then it is valid. 
-        private static Boolean isValidPlacement(int[,] board, int number, int row, int column)
+        private static Boolean IsValidPlacement(int[,] board, int number, int row, int column)
         {
-            return !isNumberInRow(board, number, row) &&
-                !isNumberInColumn(board, number, column) &&
-                !isNumberInBox(board, number, row, column);
+            return !IsNumberInRow(board, number, row) &&
+                !IsNumberInColumn(board, number, column) &&
+                !IsNumberInBox(board, number, row, column);
         }
 
         //Solver logic.
-        private static Boolean solveBoard(int[,] board)
+        private static Boolean SolveBoard(int[,] board)
         {
             for (int row = 0; row < BOARD_SIZE; row++)
             {
@@ -194,11 +195,11 @@ namespace HaeringProject
                     {
                         for (int numberToTry = 1; numberToTry <= BOARD_SIZE; numberToTry++)
                         {
-                            if (isValidPlacement(board, numberToTry, row, column))
+                            if (IsValidPlacement(board, numberToTry, row, column))
                             {
                                 board[row, column] = numberToTry;
 
-                                if (solveBoard(board))
+                                if (SolveBoard(board))
                                 {
                                     return true;
                                 }
@@ -215,15 +216,15 @@ namespace HaeringProject
             return true;
         }
 
-        private void populateWithSolution()
+        private void PopulateWithSolution()
         {
-            if (solveBoard(chosenBoard)) { //test
+            if (SolveBoard(ChosenBoard)) { 
 
                 for (int i = 0; i < BOARD_SIZE; i++)
                 {
                     for (int j = 0; j < BOARD_SIZE; j++)
                     {
-                        dataGridView1.Rows[i].Cells[j].Value = chosenBoard[i, j];
+                        dataGridView1.Rows[i].Cells[j].Value = ChosenBoard[i, j];
                         dataGridView1.Rows[i].Height = 30; //sets size
                         dataGridView1.Columns[i].Width = 30; // sets size
                     }
@@ -236,9 +237,9 @@ namespace HaeringProject
             }
         }
 
-        private void button1Clicked(object sender, EventArgs e)
+        private void SolveButtonClicked(object sender, EventArgs e)
         {
-            populateWithSolution();
+            PopulateWithSolution();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace HaeringProject
 {
-    partial class Form2
+    partial class LaunchForm
     {
         /// <summary>
         /// Required designer variable.
@@ -34,8 +34,7 @@
             this.mediumButton = new System.Windows.Forms.Button();
             this.hardButton = new System.Windows.Forms.Button();
             this.loadButton = new System.Windows.Forms.Button();
-            this.openSaveButton = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
+            this.openSaveForm = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -55,7 +54,7 @@
             this.easyButton.TabIndex = 1;
             this.easyButton.Text = "Easy";
             this.easyButton.UseVisualStyleBackColor = true;
-            this.easyButton.Click += new System.EventHandler(this.easyButton_Click);
+            this.easyButton.Click += new System.EventHandler(this.EasyButton_Click);
             // 
             // mediumButton
             // 
@@ -65,7 +64,7 @@
             this.mediumButton.TabIndex = 2;
             this.mediumButton.Text = "Medium";
             this.mediumButton.UseVisualStyleBackColor = true;
-            this.mediumButton.Click += new System.EventHandler(this.mediumButton_Click);
+            this.mediumButton.Click += new System.EventHandler(this.MediumButton_Click);
             // 
             // hardButton
             // 
@@ -75,7 +74,7 @@
             this.hardButton.TabIndex = 3;
             this.hardButton.Text = "Hard";
             this.hardButton.UseVisualStyleBackColor = true;
-            this.hardButton.Click += new System.EventHandler(this.hardButton_Click);
+            this.hardButton.Click += new System.EventHandler(this.HardButton_Click);
             // 
             // loadButton
             // 
@@ -86,42 +85,32 @@
             this.loadButton.TabIndex = 4;
             this.loadButton.Text = "Load your own board!";
             this.loadButton.UseVisualStyleBackColor = false;
-            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
+            this.loadButton.Click += new System.EventHandler(this.LoadButton_Click);
             // 
-            // openSaveButton
+            // openSaveForm
             // 
-            this.openSaveButton.BackColor = System.Drawing.Color.Cornsilk;
-            this.openSaveButton.Location = new System.Drawing.Point(297, 252);
-            this.openSaveButton.Name = "openSaveButton";
-            this.openSaveButton.Size = new System.Drawing.Size(167, 23);
-            this.openSaveButton.TabIndex = 5;
-            this.openSaveButton.Text = "Save your own board!";
-            this.openSaveButton.UseVisualStyleBackColor = false;
+            this.openSaveForm.BackColor = System.Drawing.Color.Cornsilk;
+            this.openSaveForm.Location = new System.Drawing.Point(297, 252);
+            this.openSaveForm.Name = "openSaveForm";
+            this.openSaveForm.Size = new System.Drawing.Size(167, 23);
+            this.openSaveForm.TabIndex = 5;
+            this.openSaveForm.Text = "Save your own board!";
+            this.openSaveForm.UseVisualStyleBackColor = false;
+            this.openSaveForm.Click += new System.EventHandler(this.OpenSaveButton_Click);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(100, 357);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(650, 16);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Please enter your board as a 9 by 9 grid of numbers, separated by spaces. Please " +
-    "use 0\'s as empty spaces.";
-            // 
-            // Form2
+            // LaunchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.openSaveButton);
+            this.Controls.Add(this.openSaveForm);
             this.Controls.Add(this.loadButton);
             this.Controls.Add(this.hardButton);
             this.Controls.Add(this.mediumButton);
             this.Controls.Add(this.easyButton);
             this.Controls.Add(this.label1);
-            this.Name = "Form2";
-            this.Text = "Form2";
+            this.Name = "LaunchForm";
+            this.Text = "Sudoku Solver";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -135,7 +124,6 @@
         private System.Windows.Forms.Button mediumButton; //Medium Button
         private System.Windows.Forms.Button hardButton; //Hard Button 
         private System.Windows.Forms.Button loadButton; //Load your own button
-        private System.Windows.Forms.Button openSaveButton;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button openSaveForm;
     }
 }

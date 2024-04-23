@@ -1,6 +1,6 @@
 ﻿namespace HaeringProject
 {
-    partial class Form1
+    partial class SolverForm
     {
         /// <summary>
         /// Required designer variable.
@@ -36,10 +36,10 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(108, 50);
+            this.dataGridView1.Location = new System.Drawing.Point(217, 47);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.Size = new System.Drawing.Size(583, 388);
+            this.dataGridView1.Size = new System.Drawing.Size(365, 339);
             this.dataGridView1.TabIndex = 0;
             // 
             // button1
@@ -51,15 +51,15 @@
             this.button1.Text = "Solve!";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // SolverForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "SolverForm";
+            this.Text = "Solver Form";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
